@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package puzzle;
 
-/**
- *
- * @author familiacetina
- */
 public class Nodo<T> {
     
     Nodo<T> hijoArriba = null;
@@ -26,14 +18,4 @@ public class Nodo<T> {
     Nodo(T key) {
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
