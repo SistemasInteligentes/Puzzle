@@ -12,13 +12,11 @@ public class Arbol<T> {
     public void insertarProfundidad (T keyNodo){
         
     }
-
-    public void insertarIterativo(T keyNodo) {
-    
+    public void insertarIterativo (T keyNodo){
+        
     }
-
-    public void insertarAmplitud(T keyNodo) {
-    
+    public void insertarAmplitud (T keyNodo){
+        
     }
     
     private void addHijo(Nodo hijo, int[] tablero, String tipoInsercion){
@@ -45,7 +43,7 @@ public class Arbol<T> {
     }
     
     private int getPosicion(Nodo nodo){
-        return 0;
+        return nodo.getPosVacia();
     }
     
     private void nuevoEstado(int [] tablero, int estadoActual, int posicion, int nuevaPosicion){

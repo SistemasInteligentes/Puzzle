@@ -32,7 +32,15 @@ public class Puzzle {
         return 0;
     }
 
-    private void toArray() {
+    private int [] toArray(int key) {
+        int mapa [] = new int [9];
+        //int tmp = 0;
+        
+        for(int i = 0; i <8; i++){
+          mapa[i] = key%10;
+          key = key/10;
+        }
+        return mapa;
     }
 
     /*
