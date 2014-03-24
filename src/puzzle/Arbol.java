@@ -7,28 +7,28 @@ public class Arbol<T> {
     private static String ITERATIVO = "ITERATIVO";
     private static String AMPLITUD = "AMPLITUD";
     
-    private Nodo<T> raiz;    
+    private Nodo raiz;    
     
-    public void insertarProfundidad (T keyNodo){
+    public void insertarProfundidad (Nodo keyNodo){
         
     }
-    public void insertarIterativo (T keyNodo){
+    public void insertarIterativo (Nodo keyNodo){
         
     }
-    public void insertarAmplitud (T keyNodo){
+    public void insertarAmplitud (Nodo keyNodo){
         
     }
     
     private void addHijo(Nodo hijo, int[] tablero, String tipoInsercion){
         switch(tipoInsercion){
             case "PROFUNDIDAD":
-                    insertarProfundidad((T) hijo);
+                    insertarProfundidad(hijo);
                 break;
             case "ITERATIVO":
-                    insertarIterativo((T) hijo);
+                    insertarIterativo(hijo);
                 break;
             case "AMPLITUD":
-                    insertarAmplitud((T) hijo);
+                    insertarAmplitud(hijo);
                 break;
         }
     }
@@ -38,7 +38,7 @@ public class Arbol<T> {
         return false;
     }
     
-    private boolean esMismoEstado(int [] tablero, T key){
+    private boolean esMismoEstado(int [] tablero, int key){
         return false;
     }
     
@@ -121,7 +121,7 @@ public class Arbol<T> {
                 addHijo(nodoActual, tablero, tipoInsercion);
             }
             else{
-                if(!esMismoEstado(tablero, (T) nodoActual.padre.key)){
+                if(!esMismoEstado(tablero, nodoActual.padre.key)){
                     addHijo(nodoActual, tablero, tipoInsercion);
                 }
             }
@@ -132,7 +132,7 @@ public class Arbol<T> {
                 addHijo(nodoActual, tablero, tipoInsercion);
             }
             else{
-                if(!esMismoEstado(tablero, (T) nodoActual.padre.key)){
+                if(!esMismoEstado(tablero, nodoActual.padre.key)){
                     addHijo(nodoActual, tablero, tipoInsercion);
                 }
             }
@@ -143,7 +143,7 @@ public class Arbol<T> {
                 addHijo(nodoActual, tablero, tipoInsercion);
             }
             else{
-                if(!esMismoEstado(tablero, (T) nodoActual.padre.key)){ 
+                if(!esMismoEstado(tablero, nodoActual.padre.key)){ 
                     addHijo(nodoActual, tablero, tipoInsercion);
                 }
             }
@@ -154,7 +154,7 @@ public class Arbol<T> {
                 addHijo(nodoActual, tablero, tipoInsercion);
             }
             else{
-                if(!esMismoEstado(tablero, (T) nodoActual.padre.key)){
+                if(!esMismoEstado(tablero, nodoActual.padre.key)){
                     addHijo(nodoActual, tablero, tipoInsercion);
                 }
             }
@@ -163,8 +163,8 @@ public class Arbol<T> {
     }
     
     
-    public Arbol (T keyNodo){
-        raiz = new Nodo<T>();
+    public Arbol (int keyNodo){
+        raiz = new Nodo();
         raiz.key = keyNodo;
     }
     

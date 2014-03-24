@@ -1,21 +1,21 @@
 package puzzle;
 
-public class Nodo<T> {
+public class Nodo {
 
-     Nodo<T> hijoArriba = null;
-     Nodo<T> hijoAbajo = null;
-     Nodo<T> hijoDerecha = null;
-     Nodo<T> hijoIzquierda = null;
-     Nodo<T> padre = null;
+     Nodo hijoArriba = null;
+     Nodo hijoAbajo = null;
+     Nodo hijoDerecha = null;
+     Nodo hijoIzquierda = null;
+     Nodo padre = null;
     
-     T key;
+     int key;
      
 
     Nodo() {
     
     }
 
-    Nodo(T key) {
+    Nodo(int key) {
     
     }
     /*
