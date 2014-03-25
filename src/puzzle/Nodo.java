@@ -6,6 +6,8 @@ public class Nodo {
      Nodo hijoAbajo = null;
      Nodo hijoDerecha = null;
      Nodo hijoIzquierda = null;
+     
+     
      Nodo padre = null;
     
      int key;
@@ -16,16 +18,16 @@ public class Nodo {
     }
 
     Nodo(int key) {
-    
+        this.key = key;
     }
     /*
      * a partir de la llave entera genera un array con el estado del puzzle
      */
-    private int [] toArray(int key) {
+    public int [] toArray(int key) {
         int mapa [] = new int [9];
         //
         
-        for(int i = 0; i <8; i++){
+        for(int i = 0; i <9; i++){
           mapa[i] = ((int)key)%10;
           key = key/10;
         }

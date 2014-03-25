@@ -13,6 +13,7 @@ public class Hash {
       }
       
       public Nodo buscar (int key){
+          System.out.println("Hash buscar nodo: "+(Nodo)tabla.get(key));
           return (Nodo)tabla.get(key);
       }
 }
