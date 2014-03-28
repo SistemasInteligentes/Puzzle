@@ -28,8 +28,11 @@ public class Puzzle {
         System.out.println("Hola");
         
         Nodo test = new Nodo(129453786);
+        System.out.println("Hola2");
         Arbol arbol = new Arbol(test.key, test.toArray(test.key));
-        arbol.insertar(test);     
+        System.out.println("Hola3");
+        arbol.insertar(test, 1);     
+        System.out.println("Chao");
         
     }
 
