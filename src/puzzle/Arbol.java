@@ -91,62 +91,80 @@ public class Arbol {
                 estado1 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 3);
                 costo1 = heuristica.heuristica1(toArray(nodoActual.key));
                 mapa.put(costo1, estado1);
-            }
-            if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
-                estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
-                costo2 = heuristica.heuristica1(toArray(nodoActual.key));
-                mapa.put(costo2, estado2);
-            }
-            if( (posicion-3)>=0 ){
-                estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
-                costo3 = heuristica.heuristica1(toArray(nodoActual.key));
-                mapa.put(costo3, estado3);
-            }
-            if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
-                estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
-                costo4 = heuristica.heuristica1(toArray(nodoActual.key));
-                mapa.put(costo4, estado4);
-            }
+                }
+                if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
+                    estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
+                    costo2 = heuristica.heuristica1(toArray(nodoActual.key));
+                    mapa.put(costo2, estado2);
+                }
+                if( (posicion-3)>=0 ){
+                    estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
+                    costo3 = heuristica.heuristica1(toArray(nodoActual.key));
+                    mapa.put(costo3, estado3);
+                }
+                if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
+                    estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
+                    costo4 = heuristica.heuristica1(toArray(nodoActual.key));
+                    mapa.put(costo4, estado4);
+                }
             case 2:
                 if( (posicion+3)<SIZE ){
                 estado1 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 3);
-                //costo1 = heuristica2()
-            }
-            if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
-                estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
-                //costo2 = heuristica2()
-            }
-            if( (posicion-3)>=0 ){
-                estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
-                //costo2 = heuristica2()
-            }
-            if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
-                estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
-                //costo2 = heuristica2()
-            }
+                costo1 = heuristica.heuristica2(toArray(nodoActual.key));
+                mapa.put(costo1, estado1);
+                }
+                if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
+                    estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
+                    costo1 = heuristica.heuristica2(toArray(nodoActual.key));
+                    mapa.put(costo2, estado2);
+                }
+                if( (posicion-3)>=0 ){
+                    estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
+                    costo1 = heuristica.heuristica2(toArray(nodoActual.key));
+                    mapa.put(costo3, estado3);
+                }
+                if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
+                    estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
+                    costo1 = heuristica.heuristica2(toArray(nodoActual.key));
+                    mapa.put(costo4, estado4);
+                }
             case 3:
                 if( (posicion+3)<SIZE ){
                 estado1 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 3);
-                //costo1 = heuristica3()
-            }
-            if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
-                estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
-                //costo2 = heuristica3()
-            }
-            if( (posicion-3)>=0 ){
-                estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
-                //costo2 = heuristica3()
-            }
-            if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
-                estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
-                //costo2 = heuristica3()
-            }
+                costo1 = heuristica.heuristica3(toArray(nodoActual.key));
+                mapa.put(costo1, estado1);
+                }
+                if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
+                    estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
+                    costo1 = heuristica.heuristica3(toArray(nodoActual.key));
+                    mapa.put(costo2, estado2);
+                }
+                if( (posicion-3)>=0 ){
+                    estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
+                    costo1 = heuristica.heuristica3(toArray(nodoActual.key));
+                    mapa.put(costo3, estado3);
+                }
+                if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
+                    estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
+                    costo1 = heuristica.heuristica3(toArray(nodoActual.key));
+                    mapa.put(costo4, estado4);
+                }
         }
         
         //evaluar menor costo y saber a cual estado le corresponde
-//        if(costo1<=costo2 && costo1<=costo2){
-//            menor=costo1;
-//        }
+
+        if(costo1 < costo2 && costo1 < costo3 && costo1 < costo4){  
+            menor=costo1;  
+        }else{  
+            if(costo2 < costo1 && costo2 < costo3 && costo2 < costo4){  
+                menor=costo2;  
+            }else{  
+                if(costo3 < costo1 && costo3 < costo2 && costo3 < costo4){  
+                    menor=costo3;  
+                }else  
+                    menor=costo4;  
+            }  
+        }  
         
         
         return (int) mapa.get(menor); // retorna el estado de menor costo
