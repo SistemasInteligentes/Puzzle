@@ -1,5 +1,6 @@
 package puzzle;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 public class Arbol {
@@ -10,10 +11,12 @@ public class Arbol {
     private static String AMPLITUD = "AMPLITUD";
     
     private Nodo raiz;   
-    private Hash nuestroHash = null;
-    private Stack stack = new Stack();
     
     private int[] tablero = null;
+    private Hash nuestroHash = null;
+    
+    Nodo actual;
+    Heuristicas heuristica = new Heuristicas();
     
     public Arbol (int keyNodo, int[] tablero){
         raiz = new Nodo();
@@ -24,47 +27,6 @@ public class Arbol {
         
         this.tablero = tablero;
         SIZE = tablero.length;        
-    }
-
-    
-    public void insertarProfundidad (Nodo keyNodo){
-        
-        Nodo actual = keyNodo;
-        stack.add(keyNodo);
-        nuestroHash.insertar(keyNodo);
-        while(!stack.empty() && actual.key != 123456789){
-            actual =(Nodo) stack.pop();
-            System.out.println("1 actual.key = "+actual.key);
-            generarEstadoNodoNoDuplicado(actual, PROFUNDIDAD);   
-        }
-        System.out.println("2 actual.key = "+actual.key);        
-    }
-    public void insertarIterativo (Nodo keyNodo){
-        
-    }
-    public void insertarAmplitud (Nodo keyNodo){
-        
-    }
-    
-    private void addHijo(Nodo hijo, String tipoInsercion){
-        switch(tipoInsercion){
-            case "PROFUNDIDAD":
-                    stack.add(hijo);
-                break;
-            case "ITERATIVO":
-                    insertarIterativo(hijo);
-                break;
-            case "AMPLITUD":
-                    insertarAmplitud(hijo);
-                break;
-        }
-    }
-    
-    private boolean esMismoEstado(int key){
-        if(nuestroHash.buscar(key) == null){
-            return false;
-        }
-        return true;
     }
     
     private int getPosicion(Nodo nodo){
@@ -77,106 +39,134 @@ public class Arbol {
         tablero[nuevaPosicion] = aux;
         String stringEstado = Integer.toString(tablero[0]) ;
         for (int i=1; i < SIZE; i++) {
-            stringEstado =  tablero[i] + stringEstado ;
+            stringEstado =  stringEstado +tablero[i] ;
         }        
-        System.out.println("cambio de arreglo a int: "+Integer.parseInt(stringEstado));
+        System.out.println("nuevo estado "+ pintar(tablero));
         return Integer.parseInt(stringEstado) ;
     }
     
-    private void generarEstadoNodoNoDuplicado(Nodo nodoActual, String tipoInsercion){
-        int posicion;                    //es el estado del tablero
-        posicion = getPosicion(nodoActual);                     //este metodo buscara en que posicion esta el simbolo de vacio
-        
-        if( (posicion-3)>=0 ){
-            if(!esMismoEstado(nuevoEstado(tablero, posicion, posicion - 3))){   //se revisa si es un nuevo estado y se crea un hijo
-                Nodo nuevo = new Nodo(nuevoEstado(tablero, posicion, posicion - 3));
-                nuevo.padre= nodoActual;
-                addHijo(nuevo, tipoInsercion);
-            System.out.println("condicion 1: "+nuevo.key);
-            }            
+    public String pintar(int[] tablero){
+        String r="";
+        for(int i=0; i<9;i++){
+            r+=tablero[i];
         }
-
-        if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
-            if(!esMismoEstado(nuevoEstado(tablero, posicion, posicion - 1))){ 
-                Nodo nuevo = new Nodo(nuevoEstado(tablero, posicion, posicion - 1));
-                nuevo.padre= nodoActual;
-                addHijo(nuevo, tipoInsercion);
-            System.out.println("condicion 2: "+nuevo.key);
-            }           
-        }
-
-        if( (posicion+3)<SIZE ){
-            if(!esMismoEstado(nuevoEstado(tablero, posicion, posicion + 3))){ 
-                Nodo nuevo= new Nodo(nuevoEstado(tablero, posicion, posicion + 3));
-                nuevo.padre= nodoActual;
-                addHijo(nuevo, tipoInsercion);
-            System.out.println("condicion 3: "+nuevo.key);
-            }
-        }
-
-        if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
-            if(!esMismoEstado(nuevoEstado(tablero, posicion, posicion +1))){
-                Nodo nuevo = new Nodo(nuevoEstado(tablero, posicion, posicion +1));
-                nuevo.padre= nodoActual;
-                addHijo(nuevo, tipoInsercion);
-            System.out.println("condicion 4: "+nuevo.key);
-            }
-        }
-//        return false;
+        return r;
     }
     
-//    private boolean generarEstadoNodo(Nodo nodoActual, String tipoInsercion){
-//        int posicion;
-//        int estadoActual;
-//        int[] tablero = new int[SIZE];
-//        
-//        estadoActual = (int) nodoActual.key;                    //es el estado del tablero
-//        posicion = getPosicion(nodoActual);                     //este metodo buscara en que posicion esta el simbolo de vacio
-//        
-//        if( (posicion-3)>=0 ){
-//            nuevoEstado(tablero, estadoActual, posicion, posicion-3);
-//            if(nodoActual.padre == null){
-//                addHijo(nodoActual, tablero, tipoInsercion);
-//            }
-//            else{
-//                if(!esMismoEstado(tablero, nodoActual.padre.key)){
-//                    addHijo(nodoActual, tablero, tipoInsercion);
-//                }
-//            }
+    
+    public int [] toArray(int key) {
+        int mapa [] = new int [9];
+        int aux[]= new int[9];
+        //
+        int j =8;
+        for(int i = 0; i <9; i++){
+          mapa[i] = ((int)key)%10;
+          key = key/10;
+          aux[j]=mapa[i];
+          j--;
+        }
+        mapa=aux;
+        return mapa;
+    }
+    
+    
+    private int generarEstado(Nodo nodoActual, int heuris){
+        int posicion;                    //es el estado del tablero
+        posicion = getPosicion(nodoActual);        
+        HashMap mapa = new HashMap();
+        //este metodo buscara en que posicion esta el simbolo de vacio
+        int estado1 = 0;
+        int costo1 = 100;
+        int estado2 = 0;
+        int costo2 = 100;
+        int estado3 = 0;
+        int costo3 = 100;
+        int estado4 = 0;
+        int costo4 = 100;
+        int menor = 0;
+        
+        switch(heuris){
+            case 1:
+            if( (posicion+3)<SIZE ){
+                estado1 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 3);
+                costo1 = heuristica.heuristica1(toArray(nodoActual.key));
+                mapa.put(costo1, estado1);
+            }
+            if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
+                estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
+                costo2 = heuristica.heuristica1(toArray(nodoActual.key));
+                mapa.put(costo2, estado2);
+            }
+            if( (posicion-3)>=0 ){
+                estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
+                costo3 = heuristica.heuristica1(toArray(nodoActual.key));
+                mapa.put(costo3, estado3);
+            }
+            if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
+                estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
+                costo4 = heuristica.heuristica1(toArray(nodoActual.key));
+                mapa.put(costo4, estado4);
+            }
+            case 2:
+                if( (posicion+3)<SIZE ){
+                estado1 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 3);
+                //costo1 = heuristica2()
+            }
+            if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
+                estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
+                //costo2 = heuristica2()
+            }
+            if( (posicion-3)>=0 ){
+                estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
+                //costo2 = heuristica2()
+            }
+            if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
+                estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
+                //costo2 = heuristica2()
+            }
+            case 3:
+                if( (posicion+3)<SIZE ){
+                estado1 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 3);
+                //costo1 = heuristica3()
+            }
+            if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
+                estado2 = nuevoEstado(toArray(nodoActual.key), posicion, posicion -1);
+                //costo2 = heuristica3()
+            }
+            if( (posicion-3)>=0 ){
+                estado3 = nuevoEstado(toArray(nodoActual.key), posicion, posicion - 3);
+                //costo2 = heuristica3()
+            }
+            if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
+                estado4 = nuevoEstado(toArray(nodoActual.key), posicion, posicion + 1);
+                //costo2 = heuristica3()
+            }
+        }
+        
+        //evaluar menor costo y saber a cual estado le corresponde
+//        if(costo1<=costo2 && costo1<=costo2){
+//            menor=costo1;
 //        }
-//        if( (posicion-1)>=0 && (posicion-1)!=2 && (posicion-1)!=5){
-//            nuevoEstado(tablero, estadoActual, posicion, posicion-1);
-//            if(nodoActual.padre == null){
-//                addHijo(nodoActual, tablero, tipoInsercion);
-//            }
-//            else{
-//                if(!esMismoEstado(tablero, nodoActual.padre.key)){
-//                    addHijo(nodoActual, tablero, tipoInsercion);
-//                }
-//            }
-//        }
-//        if( (posicion+3)<SIZE ){
-//            nuevoEstado(tablero, estadoActual, posicion, posicion+3);
-//            if(nodoActual.padre == null){ 
-//                addHijo(nodoActual, tablero, tipoInsercion);
-//            }
-//            else{
-//                if(!esMismoEstado(tablero, nodoActual.padre.key)){ 
-//                    addHijo(nodoActual, tablero, tipoInsercion);
-//                }
-//            }
-//        }
-//        if( (posicion+1)<SIZE && (posicion+1)!=3 && (posicion+1)!=6){
-//            nuevoEstado(tablero, estadoActual, posicion, posicion+1);
-//            if(nodoActual.padre == null){ 
-//                addHijo(nodoActual, tablero, tipoInsercion);
-//            }
-//            else{
-//                if(!esMismoEstado(tablero, nodoActual.padre.key)){
-//                    addHijo(nodoActual, tablero, tipoInsercion);
-//                }
-//            }
-//        }
-//        return false;
-//    }
+        
+        
+        return (int) mapa.get(menor); // retorna el estado de menor costo
+    }
+    
+    public void insertar(Nodo padre){
+        
+        while(padre.key != 123456789 && Repetido(padre)){ //revisar esta condicion
+            Nodo hijo = new Nodo(generarEstado(padre, SIZE));
+            hijo.padre = padre; 
+            nuestroHash.insertar(hijo);
+        }
+        
+    }
+    
+    public boolean Repetido(Nodo nodo){
+        if(nuestroHash.buscar(nodo.key)==null){
+            return true;
+        }        
+        return false;
+    }
+    
 }
