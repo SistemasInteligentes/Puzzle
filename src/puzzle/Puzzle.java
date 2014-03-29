@@ -24,13 +24,13 @@ public class Puzzle {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         System.out.println("Hola");
         
         Nodo test = new Nodo(123459786);
         Arbol arbol = new Arbol(test.key, test.toArray(test.key));
         arbol.insertarProfundidad(test);       
-    }
+    }*/
 
     private int generarKey() {
         return 0;
