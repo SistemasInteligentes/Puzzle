@@ -10,10 +10,11 @@ public class Hash {
       
       public void insertar(Nodo nodo){
           tabla.put(nodo.key,nodo);
+          System.out.println("  Hash insert nodo: "+nodo.key);
       }
       
       public Nodo buscar (int key){
-          System.out.println("Hash buscar nodo: "+(Nodo)tabla.get(key));
+          System.out.println("  Hash buscar nodo "+key+" : "+(Nodo)tabla.get(key));
           return (Nodo)tabla.get(key);
       }
 }

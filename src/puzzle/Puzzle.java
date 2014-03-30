@@ -27,10 +27,14 @@ public class Puzzle {
   /*  public static void main(String[] args) {
         System.out.println("Hola");
         
-        Nodo test = new Nodo(123459786);
+        Nodo test = new Nodo(129453786);
+        System.out.println("Hola2");
         Arbol arbol = new Arbol(test.key, test.toArray(test.key));
-        arbol.insertarProfundidad(test);       
-    }*/
+        System.out.println("Hola3");
+        arbol.insertar(test, 1);     
+        System.out.println("Chao");
+        
+    }
 
     private int generarKey() {
         return 0;
