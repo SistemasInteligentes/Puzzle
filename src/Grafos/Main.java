@@ -45,6 +45,7 @@ public class Main {
         Vertex v12 = g.insertVertex("L");
         Vertex v13 = g.insertVertex("M");
         Vertex v14 = g.insertVertex("N");
+        Vertex v15 = g.insertVertex("N");
         //salen de m
         g.insertEdge(v11, v12, 1, true);
         g.insertEdge(v11, v13, 1, true);
