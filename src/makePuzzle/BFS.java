@@ -13,7 +13,6 @@ public class BFS {
         BFS.solucion = solucion;
         agregar(solucion, null);
         while (!listaPuzzle.isEmpty()) {
-            System.out.println(listaPuzzle.toString());
             Puzzle lista = new Puzzle(listaPuzzle.removeFirst());
             if (lista.solucion()) {
                 System.out.println(lista.datos);
@@ -39,6 +38,7 @@ public class BFS {
                 siguientePuzzle = lista.izquierda();
                 agregar(siguientePuzzle, lista.datos);
             }
+            //System.out.println(lista.datos);
         }
 
     }
